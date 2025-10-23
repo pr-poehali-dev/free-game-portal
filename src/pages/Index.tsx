@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
+import { useToast } from '@/hooks/use-toast';
 
 interface Game {
   id: number;
@@ -38,6 +39,23 @@ const games: Game[] = [
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('home');
+  const { toast } = useToast();
+
+  const handlePlayGame = (gameTitle: string) => {
+    toast({
+      title: "🎮 Запуск игры...",
+      description: `${gameTitle} загружается в облаке. Приятной игры!`,
+      duration: 3000,
+    });
+  };
+
+  const handleLogin = () => {
+    toast({
+      title: "👋 Добро пожаловать!",
+      description: "Функция входа скоро будет доступна",
+      duration: 2000,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -73,7 +91,7 @@ const Index = () => {
               ))}
             </div>
 
-            <Button size="sm" className="gradient-cyberpunk glow-cyan">
+            <Button size="sm" className="gradient-cyberpunk glow-cyan" onClick={handleLogin}>
               <Icon name="User" size={18} className="mr-2" />
               Войти
             </Button>
@@ -137,6 +155,7 @@ const Index = () => {
                     <Button
                       className="w-full gradient-cyberpunk glow-cyan group-hover:scale-105 transition-transform text-lg py-6"
                       size="lg"
+                      onClick={() => handlePlayGame(game.title)}
                     >
                       <Icon name="Play" size={20} className="mr-2" />
                       Играть сейчас
